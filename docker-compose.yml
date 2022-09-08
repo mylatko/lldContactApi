@@ -1,0 +1,52 @@
+version: '3.5'
+services:
+  nginx:
+    container_name: lld_nginx
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+      args:
+        POSTGRES_DB: ${PG_DATABASE}
+        POSTGRES_HOST: ${PG_HOST}
+        POSTGRES_USER: ${PG_USER}
+        POSTGRES_PASSWORD: ${PG_PASSWORD}
+    restart: on-failure
+    ports:
+      - 99:80
+    volumes:
+      - ./logs/nginx:/var/log/nginx:rw
+      - ./sources:/var/www:rw
+    depends_on:
+      - php
+    networks:
+      - lld
+
+  php:
+    container_name: lld_php
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./sources:/var/www/
+    networks:
+      - lld
+
+  postgres:
+    build:
+      context: .
+      dockerfile: docker/postgres/Dockerfile
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_HOST: ${PG_HOST}
+      POSTGRES_DB: ${PG_DATABASE}
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      PG_PORT: ${PG_PORT}
+    networks:
+      - lld
+
+networks:
+  lld:
