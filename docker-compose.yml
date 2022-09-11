@@ -5,11 +5,6 @@ services:
     build:
       context: .
       dockerfile: docker/nginx/Dockerfile
-      args:
-        POSTGRES_DB: ${PG_DATABASE}
-        POSTGRES_HOST: ${PG_HOST}
-        POSTGRES_USER: ${PG_USER}
-        POSTGRES_PASSWORD: ${PG_PASSWORD}
     restart: on-failure
     ports:
       - 99:80
@@ -26,6 +21,11 @@ services:
     build:
       context: .
       dockerfile: ./docker/php/Dockerfile
+      args:
+        POSTGRES_DB: ${PG_DATABASE}
+        POSTGRES_HOST: ${PG_HOST}
+        POSTGRES_USER: ${PG_USER}
+        POSTGRES_PASSWORD: ${PG_PASSWORD}
     ports:
       - "9000:9000"
     volumes:
