@@ -1,3 +1,31 @@
 controllers:
     resource: ../src/Controller/
     type: attribute
+
+swagger-docs:
+    path: /docs/v1.0
+    controller: App\Controller\DocsController::index
+
+swagger-docs-json:
+    path: /docs/json
+    controller: App\Controller\DocsController::json
+
+contact_get:
+    path: /v1.0/contact/{name}
+    controller: App\Controller\ContactController::get
+    methods: GET
+
+contact_put:
+    path: /v1.0/contact
+    controller: App\Controller\ContactController::put
+    methods: POST
+
+contact_patch:
+    path: /v1.0/contact/{id}
+    controller: App\Controller\ContactController::patch
+    methods: PATCH
+
+contact_delete:
+    path: /v1.0/contact/{id}
+    controller: App\Controller\ContactController::delete
+    methods: DELETE

@@ -1,0 +1,420 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Phone book",
+    "description": "Phone book API",
+    "contact": {
+      "name": "Swagger API Phone book"
+    },
+  },
+  "host": "http://localhost:99",
+  "basePath": "/api/v1.0/",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1.0/contact": {
+      "get": {
+        "description": "Returns contact by name",
+        "produces": [
+          "application/json"
+        ],
+        "tags": ["contact"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "schema": {
+              "type": "string",
+              "example": "Apfel Gurke"
+            },
+            "required": true,
+            "description": "Name search for"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A contact list name.",
+            "schema": {
+              "type": "object",
+              "required": ["data", "errors"],
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/definitions/Contact"
+                  }
+                },
+                "errors": {
+                  "type": "array",
+                  "example": "[]"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Incorrect input",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/UnexpectedError"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Save contact",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": ["contact"],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "first_name",
+            "type": "string",
+            "description": "Contact first name",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "last_name",
+            "type": "string",
+            "description": "Contact last name",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "address",
+            "type": "string",
+            "description": "Contact address",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "phone",
+            "type": "string",
+            "description": "Contact phone",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "birthday",
+            "type": "string",
+            "description": "Contact birthday",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "email",
+            "type": "string",
+            "description": "Contact email",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "picture",
+            "type": "file",
+            "description": "Picture to upload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response of saving contact.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "status"
+              ],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Incorrect input",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/UnexpectedError"
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Update contact",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": ["contact"],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "first_name",
+            "type": "string",
+            "description": "First name"
+          },
+          {
+            "in": "formData",
+            "name": "last_name",
+            "type": "string",
+            "description": "Last name"
+          },
+          {
+            "in": "formData",
+            "name": "address",
+            "type": "string",
+            "description": "Address"
+          },
+          {
+            "in": "formData",
+            "name": "phone",
+            "type": "string",
+            "description": "Contact phone"
+          },
+          {
+            "in": "formData",
+            "name": "birthday",
+            "type": "string",
+            "description": "Contact birthday"
+          },
+          {
+            "in": "formData",
+            "name": "email",
+            "type": "string",
+            "description": "Contact email"
+          },
+          {
+            "in": "formData",
+            "name": "picture",
+            "type": "file",
+            "description": "Picture to upload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response of update contact.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "status"
+              ],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Incorrect input",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/UnexpectedError"
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete contact",
+        "produces": [
+          "application/json"
+        ],
+        "tags": ["contact"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "example": "14"
+            },
+            "required": true,
+            "description": "Contact id to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response of contact delete.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "status"
+              ],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Incorrect input",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/UnexpectedError"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Contact": {
+      "type": "object",
+      "required": [
+        "id",
+        "first_name",
+        "last_name",
+        "address",
+        "phone",
+        "birthday",
+        "email"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "example": 13
+        },
+        "first_name": {
+          "type": "string",
+          "example": "Apfel"
+        },
+        "last_name": {
+          "type": "string",
+          "example": "Gurke"
+        },
+        "address": {
+          "type": "string",
+          "example": "Munchen, Leopold Str 187"
+        },
+        "phone": {
+          "type": "string",
+          "example": "491122334455"
+        },
+        "birthday": {
+          "type": "string",
+          "example": "1995-05-05"
+        },
+        "email": {
+          "type": "string",
+          "example": "apfel.gurke@gmail.com"
+        },
+        "picture": {
+          "type": "string",
+          "example": "http://static.host/abc/def/ghj/abcdefghj123.jpg"
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "required": ["data", "errors"],
+      "properties": {
+        "data": {
+          "type": "object",
+          "example": "{}"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "system_message",
+              "code"
+            ],
+            "properties": {
+              "system_message": {
+                "type": "string",
+                "description": "Error message",
+                "example": "This value should not be blank"
+              },
+              "code": {
+                "type": "integer",
+                "description": "Error code",
+                "example": "24"
+              }
+            }
+          }
+        }
+      }
+    },
+    "UnexpectedError": {
+      "type": "object",
+      "required": [
+        "data",
+        "errors"
+      ],
+      "properties": {
+        "data": {
+          "type": "object",
+          "example": "{}"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["system_message", "code"],
+            "properties": {
+              "system_message": {
+                "type": "string",
+                "description": "Error message",
+                "example": "Internal error"
+              },
+              "code": {
+                "type": "integer",
+                "description": "Error code",
+                "example": "20"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

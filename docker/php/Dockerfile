@@ -28,7 +28,8 @@ RUN docker-php-ext-install zip \
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
 WORKDIR /var/www
-COPY  --chown=www-data:www-data ./sources /var/www/
+RUN chown -R www-data:www-data /var/www
+COPY --chown=www-data:www-data ./sources /var/www/
 
 #Install project dependencies
 RUN export COMPOSER_HOME=$(pwd) && composer --no-progress --prefer-dist --no-interaction install
