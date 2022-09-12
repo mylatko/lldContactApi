@@ -5,6 +5,7 @@ namespace App\Service\Contact\Repository;
 use App\Service\Contact\DTO\SaveContactDTO;
 use App\Service\Contact\Entity\Contact;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -36,6 +37,20 @@ class ContactRepository extends ServiceEntityRepository
         }
 
         $this->add($contact, 1);
+    }
+
+    public function findByName(string $name): array
+    {
+        //@todo think about max results
+        return $this->createQueryBuilder('c')
+            ->where('LOWER(c.first_name) LIKE :val')
+            ->orWhere('LOWER(c.last_name) LIKE :val')
+            ->orWhere('LOWER(CONCAT(c.first_name, \' \', c.last_name)) LIKE :val')
+            ->setParameter('val', '%' . strtolower($name) . '%')
+            ->setMaxResults($_ENV['GET_CONTACT_LIMIT'])
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     public function add(Contact $entity, bool $flush = false): void

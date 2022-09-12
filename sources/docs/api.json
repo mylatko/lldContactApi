@@ -22,7 +22,7 @@
   "paths": {
     "/contact": {
       "get": {
-        "description": "Returns contact by name",
+        "description": "Returns contact by name. Max 5 results",
         "produces": [
           "application/json"
         ],

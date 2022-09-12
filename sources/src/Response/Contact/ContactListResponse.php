@@ -10,19 +10,20 @@ use App\Service\Contact\ContactCollection;
 
 class ContactListResponse extends BaseResponse
 {
-    protected ContactCollection $contacts;
+    protected ?ContactCollection $contacts;
 
     public function __construct(
-        ContactCollection $contacts
+        ?ContactCollection $contacts
     )
     {
         $this->contacts = $contacts;
+        parent::__construct();
     }
 
     public function getOutput(): array
     {
         return [
-            'data' => $this->contacts->toArray(),
+            'data' => null !== $this->contacts ? $this->contacts->toArray() : [],
             'errors' => []
         ];
     }

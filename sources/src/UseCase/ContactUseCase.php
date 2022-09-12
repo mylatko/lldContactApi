@@ -6,13 +6,15 @@ declare(strict_types=1);
 namespace App\UseCase;
 
 use App\Error;
+use App\Service\Contact\ContactCollection;
 use App\Service\Contact\DTO\DeleteContactDTO;
 use App\Service\Contact\DTO\SaveContactDTO;
 use App\Service\Contact\DTO\SearchContactDTO;
 use App\Service\Contact\DTO\UpdateContactDTO;
 use App\Service\Contact\Repository\ContactRepository;
 use App\Service\Picture\PictureService;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ContactUseCase extends BaseUseCase
@@ -32,9 +34,13 @@ class ContactUseCase extends BaseUseCase
         parent::__construct($validator);
     }
 
-    public function get(SearchContactDTO $dto)
+    public function get(SearchContactDTO $dto):? ContactCollection
     {
         $this->validate($dto);
+
+        $contactArray = $this->repository->findByName($dto->getName());
+
+        return new ContactCollection($contactArray);
     }
 
     public function put(SaveContactDTO $dto)
