@@ -23,7 +23,7 @@ contact_put:
 contact_patch:
     path: /v1.0/contact/{id}
     controller: App\Controller\ContactController::patch
-    methods: PATCH
+    methods: POST
 
 contact_delete:
     path: /v1.0/contact/{id}

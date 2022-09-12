@@ -8,8 +8,8 @@
       "name": "Swagger API Phone book"
     },
   },
-  "host": "http://localhost:99",
-  "basePath": "/api/v1.0/",
+  "host": "localhost:99",
+  "basePath": "/v1.0",
   "schemes": [
     "http"
   ],
@@ -20,7 +20,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1.0/contact": {
+    "/contact": {
       "get": {
         "description": "Returns contact by name",
         "produces": [
@@ -76,7 +76,7 @@
           }
         }
       },
-      "put": {
+      "post": {
         "description": "Save contact",
         "produces": [
           "application/json"
@@ -88,14 +88,14 @@
         "parameters": [
           {
             "in": "formData",
-            "name": "first_name",
+            "name": "firstName",
             "type": "string",
             "description": "Contact first name",
             "required": true
           },
           {
             "in": "formData",
-            "name": "last_name",
+            "name": "lastName",
             "type": "string",
             "description": "Contact last name",
             "required": true
@@ -132,7 +132,7 @@
             "in": "formData",
             "name": "picture",
             "type": "file",
-            "description": "Picture to upload"
+            "description": "Picture to upload. Allowed types - png, jpeg"
           }
         ],
         "responses": {
@@ -166,8 +166,10 @@
             }
           }
         }
-      },
-      "patch": {
+      }
+    },
+    "/contact/{id}": {
+      "post": {
         "description": "Update contact",
         "produces": [
           "application/json"

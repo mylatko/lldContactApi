@@ -23,3 +23,9 @@ Generate new test. Inside php container
 ```shell
 vendor/bin/codecept generate:cest api TestName
 ```
+
+Documentation
+---------------------
+````
+http://localhost:99/docs/v1.0
+````

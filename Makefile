@@ -30,6 +30,7 @@ test:			##run tests
 	docker exec -it lld_php /bin/bash -c "\
     php bin/console cache:pool:clear cache.app && \
     php vendor/bin/codecept build && \
+    php bin/console --env=test doctrine:database:create --if-not-exists && \
     php bin/console --env=test doctrine:migrations:migrate -n && \
     php bin/console --env=test doctrine:fixtures:load -n && \
     vendor/bin/codecept run api"

@@ -5,3 +5,4 @@ sources/cache
 sources/.htaccess
 sources/.env.local
 /.idea
+sources/public/pictures/*

@@ -2,6 +2,7 @@
 
 namespace App\Service\Contact\Repository;
 
+use App\Service\Contact\DTO\SaveContactDTO;
 use App\Service\Contact\Entity\Contact;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,6 +20,22 @@ class ContactRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Contact::class);
+    }
+
+    public function store(SaveContactDTO $dto, ?string $imageLink)
+    {
+        $contact = new Contact();
+        $contact->setFirstName($dto->getFirstName());
+        $contact->setLastName($dto->getLastName());
+        $contact->setAddress($dto->getAddress());
+        $contact->setPhone($dto->getPhone());
+        $contact->setBirthday($dto->getLastName());
+        $contact->setEmail($dto->getEmail());
+        if (null !== $imageLink) {
+            $contact->setPicture($imageLink);
+        }
+
+        $this->add($contact, 1);
     }
 
     public function add(Contact $entity, bool $flush = false): void
